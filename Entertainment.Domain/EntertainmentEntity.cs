@@ -1,6 +1,6 @@
 ﻿namespace Entertainment.Domain
 {
-    public class Entertainment
+    public class EntertainmentEntity
     {
         public Guid Id { get; set; }
         /// <summary>
