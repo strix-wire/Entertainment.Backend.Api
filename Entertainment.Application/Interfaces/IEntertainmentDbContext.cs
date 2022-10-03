@@ -3,7 +3,7 @@ using Entertainment.Domain;
 
 namespace Entertainment.Application.Interfaces
 {
-    internal interface IEntertainmentDbContext
+    public interface IEntertainmentDbContext
     {
         DbSet<EntertainmentEntity> Entertainments { get; set; }
 

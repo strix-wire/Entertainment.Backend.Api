@@ -1,4 +1,5 @@
 using Entertainment.Application.Common.Mappings;
+using Entertainment.Persistence;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ builder.WebHost.UseKestrel();
 
 //Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddAutoMapper(config =>
 {
     //Get information about current assembly in progress
