@@ -1,8 +1,16 @@
+using Entertainment.Application.Common.Mappings;
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseKestrel();
 
 //Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAutoMapper(config =>
+{
+    //Get information about current assembly in progress
+    config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+});
 
 var app = builder.Build();
 
