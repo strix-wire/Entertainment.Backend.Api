@@ -1,6 +1,22 @@
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseKestrel();
+
+//Add services to the container.
+builder.Services.AddControllersWithViews();
+
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+//Configure the HTTP request pipeline
+if (!app.Environment.IsDevelopment())
+{
+
+}
+
+app.UseRouting();
+app.UseStaticFiles();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();
