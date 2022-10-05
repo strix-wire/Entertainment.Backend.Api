@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Entertainment.Application.Entertainment.Commands.UpdateEntertainment;
 
-internal class UpdateEntertainmentCommand : IRequest
+public class UpdateEntertainmentCommand : IRequest
 {
     public Guid Id { get; set; }
     /// <summary>
