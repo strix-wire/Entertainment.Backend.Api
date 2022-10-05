@@ -11,5 +11,10 @@ namespace Entertainment.Backend.Api.Controllers
         public EntertainmentController(ILogger<EntertainmentController> logger) =>
             (_logger) = logger;
 
+        [HttpGet("Test")]
+        public string GetTest()
+        {
+            return "Service running";
+        }
     }
 }
