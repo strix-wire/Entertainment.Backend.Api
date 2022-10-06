@@ -12,13 +12,13 @@ public class BaseController : Controller
     protected IMediator Mediator =>
         _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
-    protected UpdateEntertainmentDto DeserializeObject(PostDto postDto)
+    protected T DeserializeObject<T>(PostDto postDto) where T : class
     {
-        UpdateEntertainmentDto mailDto;
+        T mailDto;
         
         try
         {
-            mailDto = JsonConvert.DeserializeObject<UpdateEntertainmentDto>(postDto.Value);
+            mailDto = JsonConvert.DeserializeObject<T>(postDto.Value);
 
             return mailDto;
         }
