@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentDetails;
 
-internal class EntertainmentDetailsQuery : IRequest<EntertainmentDetailsVm>
+public class EntertainmentDetailsQuery : IRequest<EntertainmentDetailsVm>
 {
     public Guid Id { get; set; }
     /// <summary>

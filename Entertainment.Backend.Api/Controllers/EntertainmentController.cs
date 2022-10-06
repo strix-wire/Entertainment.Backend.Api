@@ -2,6 +2,7 @@
 using Entertainment.Application.Entertainment.Commands.CreateEntertainment;
 using Entertainment.Application.Entertainment.Commands.DeleteEntertainment;
 using Entertainment.Application.Entertainment.Commands.UpdateEntertainment;
+using Entertainment.Application.Entertainment.Queries.GetEntertainmentDetails;
 using Entertainment.Backend.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,10 +21,31 @@ public class EntertainmentController : BaseController
         _mapper = mapper;
     }
 
-    [HttpGet("Test")]
-    public string GetTest()
+    [HttpPost]
+    public async Task<ActionResult> Create([FromBody] PostDto postDto)
     {
-        return "Service running";
+        _logger.LogInformation("Create entertainment. Input model: " + postDto.Value);
+        CreateEntertainmentDto createEntertainmentDto = DeserializeObject<CreateEntertainmentDto>(postDto);
+
+        var command = _mapper.Map<CreateEntertainmentCommand>(createEntertainmentDto);
+        await Mediator.Send(command);
+
+        return Ok();
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> Get([FromBody] PostDto postDto)
+    {
+        _logger.LogInformation("Get entertainment. Input model: " + postDto.Value);
+        GetEntertainmentDto getEntertainmentDto = DeserializeObject<GetEntertainmentDto>(postDto);
+
+        var query = new EntertainmentDetailsQuery
+        {
+            Id = getEntertainmentDto.Id
+        };
+        var vm = await Mediator.Send(query);
+
+        return Ok(vm);
     }
 
     [HttpPost]
@@ -33,18 +55,6 @@ public class EntertainmentController : BaseController
         UpdateEntertainmentDto updateEntertainmentDto = DeserializeObject<UpdateEntertainmentDto>(postDto);
 
         var command = _mapper.Map<UpdateEntertainmentCommand>(updateEntertainmentDto);
-        await Mediator.Send(command);
-
-        return Ok();
-    }
-
-    [HttpPost]
-    public async Task<ActionResult> Create([FromBody] PostDto postDto)
-    {
-        _logger.LogInformation("Create entertainment. Input model: " + postDto.Value);
-        CreateEntertainmentDto createEntertainmentDto = DeserializeObject<CreateEntertainmentDto>(postDto);
-
-        var command = _mapper.Map<CreateEntertainmentCommand>(createEntertainmentDto);
         await Mediator.Send(command);
 
         return Ok();
@@ -63,5 +73,11 @@ public class EntertainmentController : BaseController
         await Mediator.Send(command);
 
         return Ok();
+    }
+
+    [HttpGet("Test")]
+    public string GetTest()
+    {
+        return "Service running";
     }
 }
