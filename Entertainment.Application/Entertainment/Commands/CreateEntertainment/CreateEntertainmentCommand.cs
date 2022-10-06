@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Entertainment.Application.Entertainment.Commands.CreateEntertainment;
 
-internal class CreateEntertainmentCommand : IRequest<Guid>
+public class CreateEntertainmentCommand : IRequest<Guid>
 {
     /// <summary>
     /// Not used yet
