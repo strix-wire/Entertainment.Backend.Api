@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entertainment.Application.Entertainment.Commands.CreateEntertainment;
+using Entertainment.Application.Entertainment.Commands.DeleteEntertainment;
 using Entertainment.Application.Entertainment.Commands.UpdateEntertainment;
 using Entertainment.Backend.Api.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -49,4 +50,18 @@ public class EntertainmentController : BaseController
         return Ok();
     }
 
+    [HttpPost]
+    public async Task<ActionResult> Delete([FromBody] PostDto postDto)
+    {
+        _logger.LogInformation("Delete entertainment. Input model: " + postDto.Value);
+        DeleteEntertainmentDto deleteEntertainmentDto = DeserializeObject<DeleteEntertainmentDto>(postDto);
+
+        var command = new DeleteEntertainmentCommand
+        {
+            Id = deleteEntertainmentDto.Id
+        };
+        await Mediator.Send(command);
+
+        return Ok();
+    }
 }

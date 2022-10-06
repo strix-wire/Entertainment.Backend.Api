@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entertainment.Application.Entertainment.Commands.DeleteEntertainment;
 
-internal class DeleteEntertainmentCommand : IRequest
+public class DeleteEntertainmentCommand : IRequest
 {
     public Guid Id { get; set; }
     /// <summary>
