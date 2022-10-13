@@ -3,6 +3,7 @@ using Entertainment.Application.Entertainment.Commands.CreateEntertainment;
 using Entertainment.Application.Entertainment.Commands.DeleteEntertainment;
 using Entertainment.Application.Entertainment.Commands.UpdateEntertainment;
 using Entertainment.Application.Entertainment.Queries.GetEntertainmentDetails;
+using Entertainment.Application.Entertainment.Queries.GetEntertainmentListByTypeAndAreaAndPrice;
 using Entertainment.Backend.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,6 +44,30 @@ public class EntertainmentController : BaseController
         var query = new EntertainmentDetailsQuery
         {
             Id = getEntertainmentDto.Id
+        };
+        var vm = await Mediator.Send(query);
+
+        return Ok(vm);
+    }
+
+    /// <summary>
+    /// Get list entertainment by type,
+    /// area, price
+    /// </summary>
+    /// <param name="postDto"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<ActionResult> GetEntertainmentListByTypeAndAreaAndPrice([FromBody] PostDto postDto)
+    {
+        _logger.LogInformation("Get list entertainment. Input model: " + postDto.Value);
+        GetEntertainmentListByTypeAndAreaAndPriceDto getListEntertainment = DeserializeObject
+            <GetEntertainmentListByTypeAndAreaAndPriceDto>(postDto);
+        
+        var query = new EntertainmentListQueryByTypeAndAreaAndPrice()
+        {
+            Area = getListEntertainment.Area,
+            Price = getListEntertainment.Price,
+            TypeEntertainment = getListEntertainment.TypeEntertainment
         };
         var vm = await Mediator.Send(query);
 
