@@ -22,6 +22,7 @@ public class EntertainmentController : BaseController
     }
 
     [HttpPost]
+    [Route("Create")]
     public async Task<ActionResult> Create([FromBody] PostDto postDto)
     {
         _logger.LogInformation("Create entertainment. Input model: " + postDto.Value);
@@ -60,7 +61,7 @@ public class EntertainmentController : BaseController
         return Ok();
     }
 
-    [HttpPost]
+    [HttpDelete]
     public async Task<ActionResult> Delete([FromBody] PostDto postDto)
     {
         _logger.LogInformation("Delete entertainment. Input model: " + postDto.Value);
