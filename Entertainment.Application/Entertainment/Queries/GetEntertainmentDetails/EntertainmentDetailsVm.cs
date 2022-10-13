@@ -44,6 +44,6 @@ internal class EntertainmentDetailsVm : IMapWith<EntertainmentEntity>
             .ForMember(entertainmentVm => entertainmentVm.CreationDate,
                 opt => opt.MapFrom(entertainment => entertainment.CreationDate))
             .ForMember(entertainmentVm => entertainmentVm.EditDate,
-                opt => opt.MapFrom(entertainment => entertainment.EditDate))
+                opt => opt.MapFrom(entertainment => entertainment.EditDate));
     }
 }

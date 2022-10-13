@@ -24,7 +24,7 @@ internal class CreateEntertainmentCommandHandler : IRequestHandler<CreateEnterta
             Area = request.Area,
             Latitude = request.Latitude,
             Longitude = request.Longitude,
-            CreationDate = DateTime.Now,
+            CreationDate = DateTime.UtcNow,
             EditDate = null,
         };
 

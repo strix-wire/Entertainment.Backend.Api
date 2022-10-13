@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Entertainment.Persistence
 {
-    internal class EntertainmentDbContext : DbContext, IEntertainmentDbContext
+    public class EntertainmentDbContext : DbContext, IEntertainmentDbContext
     {
         public DbSet<EntertainmentEntity> Entertainments { get;set; }
 
