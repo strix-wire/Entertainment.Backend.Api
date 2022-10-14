@@ -26,7 +26,7 @@ namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentListBy
         public DateTime? EditDate { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<EntertainmentEntity, EntertainmentLookupDto>()
+            profile.CreateMap<EntertainmentEntity, EntertainmentLookupDtoByTypeAndAreaAndPrice>()
                 .ForMember(entertainmentVm => entertainmentVm.Id,
                     opt => opt.MapFrom(entertainment => entertainment.Id))
                 .ForMember(entertainmentVm => entertainmentVm.Price,

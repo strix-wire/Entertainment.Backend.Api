@@ -20,8 +20,7 @@ namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentListBy
             CancellationToken cancellationToken)
         {
             var entertainmentQuery = await _dbContext.Entertainments
-                .Where(x=>x.Area == request.Area && x.Price == request.Price && 
-                    x.TypeEntertainment == request.TypeEntertainment)
+
                 .ProjectTo<EntertainmentLookupDtoByTypeAndAreaAndPrice>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
