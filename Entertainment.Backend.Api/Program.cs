@@ -1,5 +1,6 @@
 using Entertainment.Application;
 using Entertainment.Application.Common.Mappings;
+using Entertainment.Application.Interfaces;
 using Entertainment.Persistence;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
@@ -15,6 +16,7 @@ builder.Services.AddAutoMapper(config =>
 {
     //Get information about current assembly in progress
     config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+    config.AddProfile(new AssemblyMappingProfile(typeof(IEntertainmentDbContext).Assembly));
 });
 
 var app = builder.Build();
