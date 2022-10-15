@@ -5,7 +5,6 @@ using Entertainment.Application.Entertainment.Commands.UpdateEntertainment;
 using Entertainment.Application.Entertainment.Queries.GetEntertainmentDetails;
 using Entertainment.Application.Entertainment.Queries.GetEntertainmentListByTypeAndAreaAndPrice;
 using Entertainment.Backend.Api.Models;
-using Entertainment.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Entertainment.Backend.Api.Controllers;

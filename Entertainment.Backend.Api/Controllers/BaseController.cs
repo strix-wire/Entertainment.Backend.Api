@@ -1,7 +1,5 @@
-﻿using Entertainment.Backend.Api.Models;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Entertainment.Backend.Api.Controllers;
 

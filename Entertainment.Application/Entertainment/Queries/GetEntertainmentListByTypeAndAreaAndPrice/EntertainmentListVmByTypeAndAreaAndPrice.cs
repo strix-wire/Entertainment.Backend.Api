@@ -9,6 +9,6 @@ namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentListBy
 {
     public class EntertainmentListVmByTypeAndAreaAndPrice
     {
-        public IList<EntertainmentLookupDtoByTypeAndAreaAndPrice> GetEntertainments { get; set; }
+        public IEnumerable<EntertainmentLookupDtoByTypeAndAreaAndPrice> GetEntertainments { get; set; }
     }
 }
