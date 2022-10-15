@@ -25,26 +25,24 @@ public class EntertainmentController : BaseController
 
     [HttpPost]
     [Route("Create")]
-    public async Task<ActionResult> Create([FromBody] PostDto postDto)
+    public async Task<ActionResult> Create([FromBody] CreateEntertainmentDto dto)
     {
-        _logger.LogInformation("Create entertainment. Input model: " + postDto.Value);
-        CreateEntertainmentDto createEntertainmentDto = DeserializeObject<CreateEntertainmentDto>(postDto);
+        _logger.LogInformation("Create entertainment. Input model: " + dto);
 
-        var command = _mapper.Map<CreateEntertainmentCommand>(createEntertainmentDto);
+        var command = _mapper.Map<CreateEntertainmentCommand>(dto);
         await Mediator.Send(command);
 
         return Ok();
     }
 
     [HttpGet]
-    public async Task<ActionResult> Get([FromBody] PostDto postDto)
+    public async Task<ActionResult> Get([FromQuery] GetEntertainmentDto dto)
     {
-        _logger.LogInformation("Get entertainment. Input model: " + postDto.Value);
-        GetEntertainmentDto getEntertainmentDto = DeserializeObject<GetEntertainmentDto>(postDto);
+        _logger.LogInformation("Get entertainment. Input model: " + dto);
 
         var query = new EntertainmentDetailsQuery
         {
-            Id = getEntertainmentDto.Id
+            Id = dto.Id
         };
         var vm = await Mediator.Send(query);
 
@@ -60,15 +58,15 @@ public class EntertainmentController : BaseController
     [HttpGet]
     [Route("GetEntertainmentListByTypeAndAreaAndPrice")]
     public async Task<ActionResult> GetEntertainmentListByTypeAndAreaAndPrice(
-         [FromQuery] Area area, [FromQuery] double price, [FromQuery] TypeEntertainment typeEnt)
+         [FromQuery] GetEntertainmentListByTypeAndAreaAndPriceDto dto)
     {
-        _logger.LogInformation("Get list entertainment. Input model: " + area + price + typeEnt);
+        _logger.LogInformation("Get list entertainment. Input model: " + dto);
         
         var query = new EntertainmentListQueryByTypeAndAreaAndPrice()
         {
-            Area = area,
-            Price = price,
-            TypeEntertainment = typeEnt
+            Area = dto.Area,
+            Price = dto.Price,
+            TypeEntertainment = dto.TypeEntertainment
         };
         var vm = await Mediator.Send(query);
 
@@ -76,22 +74,21 @@ public class EntertainmentController : BaseController
     }
 
     [HttpPost]
-    public async Task<ActionResult> Update([FromBody] PostDto postDto)
+    public async Task<ActionResult> Update([FromBody] UpdateEntertainmentDto dto)
     {
-        _logger.LogInformation("Update entertainment. Input model: " + postDto.Value);
-        UpdateEntertainmentDto updateEntertainmentDto = DeserializeObject<UpdateEntertainmentDto>(postDto);
+        _logger.LogInformation("Update entertainment. Input model: " + dto);
 
-        var command = _mapper.Map<UpdateEntertainmentCommand>(updateEntertainmentDto);
+        var command = _mapper.Map<UpdateEntertainmentCommand>(dto);
         await Mediator.Send(command);
 
         return Ok();
     }
 
     [HttpDelete]
-    public async Task<ActionResult> Delete([FromBody] PostDto postDto)
+    public async Task<ActionResult> Delete([FromBody] DeleteEntertainmentDto dto)
     {
-        _logger.LogInformation("Delete entertainment. Input model: " + postDto.Value);
-        DeleteEntertainmentDto deleteEntertainmentDto = DeserializeObject<DeleteEntertainmentDto>(postDto);
+        _logger.LogInformation("Delete entertainment. Input model: " + dto);
+        DeleteEntertainmentDto deleteEntertainmentDto = DeserializeObject<DeleteEntertainmentDto>(dto);
 
         var command = new DeleteEntertainmentCommand
         {
