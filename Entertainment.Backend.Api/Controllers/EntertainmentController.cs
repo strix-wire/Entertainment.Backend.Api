@@ -88,11 +88,10 @@ public class EntertainmentController : BaseController
     public async Task<ActionResult> Delete([FromBody] DeleteEntertainmentDto dto)
     {
         _logger.LogInformation("Delete entertainment. Input model: " + dto);
-        DeleteEntertainmentDto deleteEntertainmentDto = DeserializeObject<DeleteEntertainmentDto>(dto);
 
         var command = new DeleteEntertainmentCommand
         {
-            Id = deleteEntertainmentDto.Id
+            Id = dto.Id
         };
         await Mediator.Send(command);
 
