@@ -11,20 +11,4 @@ public class BaseController : Controller
     //Будет использоваться для формирования команд, выполнения запросов
     protected IMediator Mediator =>
         _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
-
-    protected T DeserializeObject<T>(PostDto postDto) where T : class
-    {
-        T mailDto;
-        
-        try
-        {
-            mailDto = JsonConvert.DeserializeObject<T>(postDto.Value);
-
-            return mailDto;
-        }
-        catch (JsonReaderException)
-        {
-            return null;
-        }
-    }
 }
