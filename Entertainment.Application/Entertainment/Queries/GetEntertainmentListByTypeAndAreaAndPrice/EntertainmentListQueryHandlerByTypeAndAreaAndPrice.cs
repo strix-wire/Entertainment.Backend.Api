@@ -21,22 +21,22 @@ namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentListBy
         public async Task<EntertainmentListVmByTypeAndAreaAndPrice> Handle(EntertainmentListQueryByTypeAndAreaAndPrice request,
             CancellationToken cancellationToken)
         {
-            //First results for the given area, then not for the area
-            var entertainmentQueryInArea = await _dbContext.Entertainments
-                .Where(x=>request.Price >= x.Price &&
-                request.TypeEntertainment == x.TypeEntertainment &&
-                request.Area == x.Area)
-                .OrderBy(x=>_coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude))
+            var entertainment = await _dbContext.Entertainments
                 .ProjectTo<EntertainmentLookupDtoByTypeAndAreaAndPrice>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            var entertainmentQueryNotInArea = await _dbContext.Entertainments
+            //First results for the given area, then not for the area
+            var entertainmentQueryInArea = entertainment
+                .Where(x => request.Price >= x.Price &&
+                request.TypeEntertainment == x.TypeEntertainment &&
+                request.Area == x.Area)
+                .OrderBy(x => _coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude));
+
+            var entertainmentQueryNotInArea = entertainment
                 .Where(x => request.Price >= x.Price &&
                 request.TypeEntertainment == x.TypeEntertainment &&
                 request.Area != x.Area)
-                .OrderBy(x => _coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude))
-                .ProjectTo<EntertainmentLookupDtoByTypeAndAreaAndPrice>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+                .OrderBy(x => _coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude));
 
             return new EntertainmentListVmByTypeAndAreaAndPrice { GetEntertainments =
                entertainmentQueryInArea.Concat(entertainmentQueryNotInArea) };
