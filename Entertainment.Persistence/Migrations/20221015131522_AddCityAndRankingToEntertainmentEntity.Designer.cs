@@ -3,6 +3,7 @@ using System;
 using Entertainment.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Entertainment.Persistence.Migrations
 {
     [DbContext(typeof(EntertainmentDbContext))]
-    partial class EntertainmentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221015131522_AddCityAndRankingToEntertainmentEntity")]
+    partial class AddCityAndRankingToEntertainmentEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,10 +52,6 @@ namespace Entertainment.Persistence.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<long>("Price")
                         .HasColumnType("bigint");
 
@@ -62,9 +60,6 @@ namespace Entertainment.Persistence.Migrations
 
                     b.Property<int>("TypeEntertainment")
                         .HasColumnType("integer");
-
-                    b.Property<string>("UrlImage")
-                        .HasColumnType("text");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
