@@ -10,8 +10,4 @@ namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentDetail
 public class EntertainmentDetailsQuery : IRequest<EntertainmentDetailsVm>
 {
     public Guid Id { get; set; }
-    /// <summary>
-    /// Not used yet
-    /// </summary>
-    public Guid UserId { get; set; }
 }

@@ -18,6 +18,7 @@ internal class CreateEntertainmentCommandHandler : IRequestHandler<CreateEnterta
         {
             Id = Guid.NewGuid(),
             UserId = request.UserId,
+            City = request.City,
             Price = request.Price,
             TypeEntertainment = request.TypeEntertainment,
             Details = request.Details,
@@ -26,6 +27,8 @@ internal class CreateEntertainmentCommandHandler : IRequestHandler<CreateEnterta
             Longitude = request.Longitude,
             CreationDate = DateTime.UtcNow,
             EditDate = null,
+            Ranking = request.Ranking,
+            UrlImage = request.UrlImage
         };
 
         await _dbContext.Entertainments.AddAsync(entertainment, cancellationToken);

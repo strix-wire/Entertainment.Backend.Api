@@ -12,6 +12,7 @@ namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentDetail
 internal class EntertainmentDetailsVm : IMapWith<EntertainmentEntity>
 {
     public Guid Id { get; set; }
+    public string Name { get; set; }
     public long Price { get; set; }
     public TypeEntertainment TypeEntertainment { get; set; }
     public string? Details { get; set; }

@@ -10,8 +10,4 @@ namespace Entertainment.Application.Entertainment.Commands.DeleteEntertainment;
 public class DeleteEntertainmentCommand : IRequest
 {
     public Guid Id { get; set; }
-    /// <summary>
-    /// Not used yet
-    /// </summary>
-    public Guid UserId { get; set; }
 }

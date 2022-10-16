@@ -1,14 +1,6 @@
-﻿using Entertainment.Application.Entertainment.Queries.GetEntertainmentList;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentListByTypeAndAreaAndPrice;
 
-namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentListByTypeAndAreaAndPrice
+public class EntertainmentListVmByTypeAndAreaAndPrice
 {
-    public class EntertainmentListVmByTypeAndAreaAndPrice
-    {
-        public IEnumerable<EntertainmentLookupDtoByTypeAndAreaAndPrice> GetEntertainments { get; set; }
-    }
+    public IEnumerable<EntertainmentLookupDtoByTypeAndAreaAndPrice> GetEntertainments { get; set; }
 }
