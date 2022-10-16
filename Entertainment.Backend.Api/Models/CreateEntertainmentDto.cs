@@ -11,6 +11,7 @@ namespace Entertainment.Backend.Api.Models
         /// Not used yet
         /// </summary>
         public Guid? UserId { get; set; }
+        public string? UrlSite { get; set; }
         public string Name { get; set; }
         public string City { get; set; }
         public long Price { get; set; }
@@ -27,18 +28,28 @@ namespace Entertainment.Backend.Api.Models
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreateEntertainmentDto, CreateEntertainmentCommand>()
-                .ForMember(entertainment => entertainment.TypeEntertainment,
-                    opt => opt.MapFrom(entertainmentDto => entertainmentDto.TypeEntertainment))
-                .ForMember(entertainment => entertainment.Price,
-                    opt => opt.MapFrom(entertainmentDto => entertainmentDto.Price))
-                .ForMember(entertainment => entertainment.Details,
-                    opt => opt.MapFrom(entertainmentDto => entertainmentDto.Details))
-                .ForMember(entertainment => entertainment.Area,
-                    opt => opt.MapFrom(entertainmentDto => entertainmentDto.Area))
-                .ForMember(entertainment => entertainment.Latitude,
-                    opt => opt.MapFrom(entertainmentDto => entertainmentDto.Latitude))
-                .ForMember(entertainment => entertainment.Longitude,
-                    opt => opt.MapFrom(entertainmentDto => entertainmentDto.Longitude));
+                .ForMember(entertainmentVm => entertainmentVm.Name,
+                    opt => opt.MapFrom(entertainment => entertainment.Name))
+                .ForMember(entertainmentVm => entertainmentVm.City,
+                    opt => opt.MapFrom(entertainment => entertainment.City))
+                .ForMember(entertainmentVm => entertainmentVm.Price,
+                    opt => opt.MapFrom(entertainment => entertainment.Price))
+                .ForMember(entertainmentVm => entertainmentVm.TypeEntertainment,
+                    opt => opt.MapFrom(entertainment => entertainment.TypeEntertainment))
+                .ForMember(entertainmentVm => entertainmentVm.Details,
+                    opt => opt.MapFrom(entertainment => entertainment.Details))
+                .ForMember(entertainmentVm => entertainmentVm.Area,
+                    opt => opt.MapFrom(entertainment => entertainment.Area))
+                .ForMember(entertainmentVm => entertainmentVm.Latitude,
+                    opt => opt.MapFrom(entertainment => entertainment.Latitude))
+                .ForMember(entertainmentVm => entertainmentVm.Longitude,
+                    opt => opt.MapFrom(entertainment => entertainment.Longitude))
+                .ForMember(entertainmentVm => entertainmentVm.UrlImage,
+                    opt => opt.MapFrom(entertainment => entertainment.UrlImage))
+                .ForMember(entertainmentVm => entertainmentVm.Ranking,
+                    opt => opt.MapFrom(entertainment => entertainment.Ranking))
+                .ForMember(entertainmentVm => entertainmentVm.UrlSite,
+                    opt => opt.MapFrom(entertainment => entertainment.UrlSite));
         }
     }
 }

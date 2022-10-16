@@ -7,6 +7,7 @@ namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentListBy
 public class EntertainmentLookupDtoByTypeAndAreaAndPrice : IMapWith<EntertainmentEntity>
 {
     public Guid Id { get; set; }
+    public string? UrlSite { get; set; }
     public string Name { get; set; }
     public long Price { get; set; }
     public string City { get; set; }
@@ -27,6 +28,10 @@ public class EntertainmentLookupDtoByTypeAndAreaAndPrice : IMapWith<Entertainmen
         profile.CreateMap<EntertainmentEntity, EntertainmentLookupDtoByTypeAndAreaAndPrice>()
             .ForMember(entertainmentVm => entertainmentVm.Id,
                 opt => opt.MapFrom(entertainment => entertainment.Id))
+            .ForMember(entertainmentVm => entertainmentVm.Name,
+                opt => opt.MapFrom(entertainment => entertainment.Name))
+            .ForMember(entertainmentVm => entertainmentVm.City,
+                opt => opt.MapFrom(entertainment => entertainment.City))
             .ForMember(entertainmentVm => entertainmentVm.Price,
                 opt => opt.MapFrom(entertainment => entertainment.Price))
             .ForMember(entertainmentVm => entertainmentVm.TypeEntertainment,
@@ -42,6 +47,12 @@ public class EntertainmentLookupDtoByTypeAndAreaAndPrice : IMapWith<Entertainmen
             .ForMember(entertainmentVm => entertainmentVm.CreationDate,
                 opt => opt.MapFrom(entertainment => entertainment.CreationDate))
             .ForMember(entertainmentVm => entertainmentVm.EditDate,
-                opt => opt.MapFrom(entertainment => entertainment.EditDate));
+                opt => opt.MapFrom(entertainment => entertainment.EditDate))
+            .ForMember(entertainmentVm => entertainmentVm.UrlImage,
+                opt => opt.MapFrom(entertainment => entertainment.UrlImage))
+            .ForMember(entertainmentVm => entertainmentVm.Ranking,
+                opt => opt.MapFrom(entertainment => entertainment.Ranking))
+            .ForMember(entertainmentVm => entertainmentVm.UrlSite,
+                opt => opt.MapFrom(entertainment => entertainment.UrlSite));
     }
 }

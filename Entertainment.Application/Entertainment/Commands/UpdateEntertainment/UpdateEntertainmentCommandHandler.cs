@@ -2,11 +2,6 @@
 using Entertainment.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entertainment.Application.Entertainment.Commands.UpdateEntertainment;
 
@@ -44,6 +39,11 @@ internal class UpdateEntertainmentCommandHandler : IRequest<UpdateEntertainmentC
     private void UpdateEntity(EntertainmentEntity entity,
         UpdateEntertainmentCommand request)
     {
+        entity.Name = request.Name;
+        entity.City = request.City;
+        entity.Ranking = request.Ranking;
+        entity.UrlImage = request.UrlImage;
+        entity.UrlSite = request.UrlSite;
         entity.Price = request.Price;
         entity.TypeEntertainment = request.TypeEntertainment;
         entity.Details = request.Details;

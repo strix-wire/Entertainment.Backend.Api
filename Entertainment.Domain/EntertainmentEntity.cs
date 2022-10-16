@@ -4,6 +4,7 @@ public class EntertainmentEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+    public string? UrlSite { get; set; }
     /// <summary>
     /// Not used yet
     /// </summary>

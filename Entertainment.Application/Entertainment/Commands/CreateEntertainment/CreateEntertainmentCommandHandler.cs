@@ -18,6 +18,7 @@ internal class CreateEntertainmentCommandHandler : IRequestHandler<CreateEnterta
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
+            UrlSite = request.UrlSite,
             UserId = request.UserId,
             City = request.City,
             Price = request.Price,
