@@ -21,21 +21,22 @@ public class EntertainmentListQueryHandlerByTypeAndAreaAndPrice
     public async Task<EntertainmentListVmByTypeAndAreaAndPrice> Handle(EntertainmentListQueryByTypeAndAreaAndPrice request,
         CancellationToken cancellationToken)
     {
+        if (request.Price == 0)
+            request.Price = int.MaxValue;
+
         var entertainment = await _dbContext.Entertainments
+            .Where(x => request.Price >= x.Price &&
+            request.TypeEntertainment == x.TypeEntertainment)
             .ProjectTo<EntertainmentLookupDtoByTypeAndAreaAndPrice>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
         //First results for the given area, then not for the area
         var entertainmentQueryInArea = entertainment
-            .Where(x => request.Price >= x.Price &&
-            request.TypeEntertainment == x.TypeEntertainment &&
-            request.Area == x.Area)
+            .Where(x => request.Area == x.Area)
             .OrderBy(x => _coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude));
 
         var entertainmentQueryNotInArea = entertainment
-            .Where(x => request.Price >= x.Price &&
-            request.TypeEntertainment == x.TypeEntertainment &&
-            request.Area != x.Area)
+            .Where(x => request.Area != x.Area)
             .OrderBy(x => _coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude));
 
         return new EntertainmentListVmByTypeAndAreaAndPrice { GetEntertainments =
