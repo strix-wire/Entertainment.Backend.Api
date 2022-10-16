@@ -17,6 +17,7 @@ internal class CreateEntertainmentCommandHandler : IRequestHandler<CreateEnterta
         var entertainment = new EntertainmentEntity
         {
             Id = Guid.NewGuid(),
+            Name = request.Name,
             UserId = request.UserId,
             City = request.City,
             Price = request.Price,
