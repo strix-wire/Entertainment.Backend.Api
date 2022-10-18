@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Entertainment.Application.Interfaces;
 using Entertainment.Application.Logic.Geography;
+using Entertainment.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,8 +25,11 @@ public class EntertainmentListQueryHandlerByTypeAndAreaAndPrice
         if (request.Price == 0)
             request.Price = int.MaxValue;
 
+        var calcPriceMoreOrLess = GetMethodToCalculatePriceMoreOrLess(request.IntervalMoney);
+
         var entertainment = await _dbContext.Entertainments
-            .Where(x => request.Price >= x.Price &&
+            .Where(x => (calcPriceMoreOrLess.Invoke(request.Price, x.Price) &&
+            request.Price <= x.Price) &&
             request.TypeEntertainment == x.TypeEntertainment)
             .ProjectTo<EntertainmentLookupDtoByTypeAndAreaAndPrice>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
@@ -41,5 +45,23 @@ public class EntertainmentListQueryHandlerByTypeAndAreaAndPrice
 
         return new EntertainmentListVmByTypeAndAreaAndPrice { GetEntertainments =
            entertainmentQueryInArea.Concat(entertainmentQueryNotInArea) };
+    }
+
+    private Func<long, long, bool> GetMethodToCalculatePriceMoreOrLess(IntervalMoney intervalMoney)
+    {
+        if (intervalMoney == IntervalMoney.More)
+            return More;
+        else
+            return Less;
+    }
+
+    private bool More(long priceRequest, long priceCurrentEntartainment)
+    {
+        return priceRequest >= priceCurrentEntartainment;
+    }
+
+    private bool Less(long priceRequest, long priceCurrentEntartainment)
+    {
+        return priceRequest <= priceCurrentEntartainment;
     }
 }

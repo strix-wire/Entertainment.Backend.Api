@@ -9,7 +9,8 @@ namespace Entertainment.Backend.Api.Models
     public class GetEntertainmentListByTypeAndAreaAndPriceDto
     {
         public Area Area { get; set; }
-        public double Price { get; set; }
+        public long Price { get; set; }
         public TypeEntertainment TypeEntertainment { get; set; }
+        public IntervalMoney IntervalMoney { get; set; }
     }
 }
