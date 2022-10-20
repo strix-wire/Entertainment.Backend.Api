@@ -5,6 +5,7 @@ using Entertainment.Application.Logic.Geography;
 using Entertainment.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentListByTypeAndAreaAndPrice;
 
@@ -25,43 +26,44 @@ public class EntertainmentListQueryHandlerByTypeAndAreaAndPrice
         if (request.Price == 0)
             request.Price = int.MaxValue;
 
-        var calcPriceMoreOrLess = GetMethodToCalculatePriceMoreOrLess(request.IntervalMoney);
-
-        var entertainment = await _dbContext.Entertainments
-            .Where(x => (calcPriceMoreOrLess.Invoke(request.Price, x.Price) &&
-            request.Price <= x.Price) &&
-            request.TypeEntertainment == x.TypeEntertainment)
-            .ProjectTo<EntertainmentLookupDtoByTypeAndAreaAndPrice>(_mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+        var listEntertainments = await GetListEntertainmentsByIntervalMoneyAsync(request, cancellationToken);
 
         //First results for the given area, then not for the area
-        var entertainmentQueryInArea = entertainment
+        var entertainmentQueryInArea = listEntertainments
             .Where(x => request.Area == x.Area)
-            .OrderBy(x => _coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude));
+            .OrderBy(x => _coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude))
+            .ToList();
 
-        var entertainmentQueryNotInArea = entertainment
+        var entertainmentQueryNotInArea = listEntertainments
             .Where(x => request.Area != x.Area)
-            .OrderBy(x => _coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude));
+            .OrderBy(x => _coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude))
+            .ToList();
 
-        return new EntertainmentListVmByTypeAndAreaAndPrice { GetEntertainments =
-           entertainmentQueryInArea.Concat(entertainmentQueryNotInArea) };
+        entertainmentQueryInArea.AddRange(entertainmentQueryNotInArea);
+
+        return new EntertainmentListVmByTypeAndAreaAndPrice { EntertainmentsListByTypeAndAreaAndPriceVm =
+           entertainmentQueryInArea };
     }
 
-    private Func<long, long, bool> GetMethodToCalculatePriceMoreOrLess(IntervalMoney intervalMoney)
+    private async Task<IList<EntertainmentLookupDtoByTypeAndAreaAndPrice>> GetListEntertainmentsByIntervalMoneyAsync
+        (EntertainmentListQueryByTypeAndAreaAndPrice request, CancellationToken cancellationToken)
     {
-        if (intervalMoney == IntervalMoney.More)
-            return More;
+        if (request.IntervalMoney == IntervalMoney.More)
+        {
+            return await _dbContext.Entertainments
+                .Where(x => x.Price >= request.Price &&
+                request.TypeEntertainment == x.TypeEntertainment)
+                .ProjectTo<EntertainmentLookupDtoByTypeAndAreaAndPrice>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
+        }
+        //less
         else
-            return Less;
-    }
-
-    private bool More(long priceRequest, long priceCurrentEntartainment)
-    {
-        return priceRequest >= priceCurrentEntartainment;
-    }
-
-    private bool Less(long priceRequest, long priceCurrentEntartainment)
-    {
-        return priceRequest <= priceCurrentEntartainment;
+        {
+            return await _dbContext.Entertainments
+                .Where(x => x.Price <= request.Price &&
+                request.TypeEntertainment == x.TypeEntertainment)
+                .ProjectTo<EntertainmentLookupDtoByTypeAndAreaAndPrice>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
+        }
     }
 }

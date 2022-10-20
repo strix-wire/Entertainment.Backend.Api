@@ -2,5 +2,5 @@
 
 public class EntertainmentListVmByTypeAndAreaAndPrice
 {
-    public IEnumerable<EntertainmentLookupDtoByTypeAndAreaAndPrice> GetEntertainments { get; set; }
+    public IList<EntertainmentLookupDtoByTypeAndAreaAndPrice> EntertainmentsListByTypeAndAreaAndPriceVm { get; set; }
 }
