@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Entertainment.Application.Entertainment.Queries.GetEntertainmentDetails;
 
-internal class EntertainmentDetailsVm : IMapWith<EntertainmentEntity>
+public class EntertainmentDetailsVm : IMapWith<EntertainmentEntity>
 {
     public Guid Id { get; set; }
     public string? UrlSite { get; set; }
