@@ -35,6 +35,7 @@ public class EntertainmentController : BaseController
     }
 
     [HttpGet]
+    [Route("DetailsEntertainment")]
     public async Task<ActionResult> Get([FromQuery] GetEntertainmentDto dto)
     {
         _logger.LogInformation("Get entertainment. Input model: " + dto);
