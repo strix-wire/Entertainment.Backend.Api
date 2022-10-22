@@ -66,7 +66,8 @@ public class EntertainmentController : BaseController
         {
             Area = dto.Area,
             Price = dto.Price,
-            TypeEntertainment = dto.TypeEntertainment
+            TypeEntertainment = dto.TypeEntertainment,
+            IntervalMoney = dto.IntervalMoney
         };
         var vm = await Mediator.Send(query);
 
