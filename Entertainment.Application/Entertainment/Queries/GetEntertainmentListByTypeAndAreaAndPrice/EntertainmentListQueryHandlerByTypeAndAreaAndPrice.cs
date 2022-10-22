@@ -56,12 +56,19 @@ public class EntertainmentListQueryHandlerByTypeAndAreaAndPrice
                 .ProjectTo<EntertainmentLookupDtoByTypeAndAreaAndPrice>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
         }
-        //less
-        else
+        else if (request.IntervalMoney == IntervalMoney.Less)
         {
             return await _dbContext.Entertainments
                 .Where(x => x.Price <= request.Price &&
                 request.TypeEntertainment == x.TypeEntertainment)
+                .ProjectTo<EntertainmentLookupDtoByTypeAndAreaAndPrice>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
+        }
+        //IntervalMoney.NoMatter
+        else
+        {
+            return await _dbContext.Entertainments
+                .Where(x => request.TypeEntertainment == x.TypeEntertainment)
                 .ProjectTo<EntertainmentLookupDtoByTypeAndAreaAndPrice>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
         }
