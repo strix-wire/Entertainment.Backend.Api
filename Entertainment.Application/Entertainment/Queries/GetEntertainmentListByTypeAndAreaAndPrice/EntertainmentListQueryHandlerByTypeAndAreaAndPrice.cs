@@ -23,9 +23,6 @@ public class EntertainmentListQueryHandlerByTypeAndAreaAndPrice
     public async Task<EntertainmentListVmByTypeAndAreaAndPrice> Handle(EntertainmentListQueryByTypeAndAreaAndPrice request,
         CancellationToken cancellationToken)
     {
-        if (request.Price == 0)
-            request.Price = int.MaxValue;
-
         var listEntertainments = await GetListEntertainmentsByIntervalMoneyAsync(request, cancellationToken);
 
         //First results for the given area, then not for the area
@@ -50,6 +47,9 @@ public class EntertainmentListQueryHandlerByTypeAndAreaAndPrice
     {
         if (request.IntervalMoney == IntervalMoney.More)
         {
+            if (request.Price == 0)
+                request.Price = int.MinValue;
+
             return await _dbContext.Entertainments
                 .Where(x => x.Price >= request.Price &&
                 request.TypeEntertainment == x.TypeEntertainment)
@@ -58,6 +58,9 @@ public class EntertainmentListQueryHandlerByTypeAndAreaAndPrice
         }
         else if (request.IntervalMoney == IntervalMoney.Less)
         {
+            if (request.Price == 0)
+                request.Price = int.MaxValue;
+
             return await _dbContext.Entertainments
                 .Where(x => x.Price <= request.Price &&
                 request.TypeEntertainment == x.TypeEntertainment)
