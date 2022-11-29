@@ -26,10 +26,16 @@ public class EntertainmentListQueryHandlerByTypeAndAreaAndPrice
         var listEntertainments = await GetListEntertainmentsByIntervalMoneyAsync(request, cancellationToken);
 
         //First results for the given area, then not for the area
-        var entertainmentQueryInArea = listEntertainments
-            .Where(x => request.Area == x.Area)
-            .OrderBy(x => _coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude))
-            .ToList();
+
+        List<EntertainmentLookupDtoByTypeAndAreaAndPrice> entertainmentQueryInArea = new();
+
+        if (request.Area != Area.None)
+        {
+            entertainmentQueryInArea = listEntertainments
+                .Where(x => request.Area == x.Area)
+                .OrderBy(x => _coordinate.GetDistanceFromPlaceToArea(request.Area, x.Latitude, x.Longitude))
+                .ToList();
+        }
 
         var entertainmentQueryNotInArea = listEntertainments
             .Where(x => request.Area != x.Area)
