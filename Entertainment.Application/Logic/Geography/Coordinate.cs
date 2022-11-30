@@ -18,6 +18,7 @@ namespace Entertainment.Application.Logic.Geography
                 Area.Leninsky => new KeyValuePair<double, double>(56.519052, 56.519052),
                 Area.Kirovsky => new KeyValuePair<double, double>(56.455362, 84.951216),
                 Area.Soviet => new KeyValuePair<double, double>(56.47906, 85.016239),
+                Area.None => new KeyValuePair<double, double>(56.470872131757844, 84.95413755247614),
                 _ => throw new NotImplementedException(),
             };
         }
