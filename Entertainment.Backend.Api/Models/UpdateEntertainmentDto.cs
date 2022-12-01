@@ -23,5 +23,6 @@ namespace Entertainment.Backend.Api.Models
         public double Longitude { get; set; }
         public string? UrlImage { get; set; }
         public byte? Ranking { get; set; }
+        public string Address { get; set; }
     }
 }

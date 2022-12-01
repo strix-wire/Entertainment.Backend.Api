@@ -30,7 +30,8 @@ internal class CreateEntertainmentCommandHandler : IRequestHandler<CreateEnterta
             CreationDate = DateTime.UtcNow,
             EditDate = null,
             Ranking = request.Ranking,
-            UrlImage = request.UrlImage
+            UrlImage = request.UrlImage,
+            Address = request.Address
         };
 
         await _dbContext.Entertainments.AddAsync(entertainment, cancellationToken);

@@ -25,6 +25,7 @@ namespace Entertainment.Backend.Api.Models
         public double Longitude { get; set; }
         public string? UrlImage { get; set; }
         public byte? Ranking { get; set; }
+        public string Address { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreateEntertainmentDto, CreateEntertainmentCommand>()
@@ -49,7 +50,9 @@ namespace Entertainment.Backend.Api.Models
                 .ForMember(entertainmentVm => entertainmentVm.Ranking,
                     opt => opt.MapFrom(entertainment => entertainment.Ranking))
                 .ForMember(entertainmentVm => entertainmentVm.UrlSite,
-                    opt => opt.MapFrom(entertainment => entertainment.UrlSite));
+                    opt => opt.MapFrom(entertainment => entertainment.UrlSite))
+                .ForMember(entertainmentVm => entertainmentVm.Address,
+                    opt => opt.MapFrom(entertainment => entertainment.Address));
         }
     }
 }

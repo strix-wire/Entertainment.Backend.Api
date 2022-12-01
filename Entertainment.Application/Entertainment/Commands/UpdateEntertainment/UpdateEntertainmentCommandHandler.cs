@@ -51,5 +51,6 @@ internal class UpdateEntertainmentCommandHandler : IRequest<UpdateEntertainmentC
         entity.Latitude = request.Latitude;
         entity.Longitude = request.Longitude;
         entity.EditDate = DateTime.Now;
+        entity.Address = request.Address;
     }
 }

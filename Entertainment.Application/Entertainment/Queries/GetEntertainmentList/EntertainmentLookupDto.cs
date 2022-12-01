@@ -25,6 +25,7 @@ public class EntertainmentLookupDto : IMapWith<EntertainmentEntity>
     public DateTime? EditDate { get; set; }
     public string? UrlImage { get; set; }
     public byte? Ranking { get; set; }
+    public string Address { get; set; }
     public void Mapping(Profile profile)
     {
         profile.CreateMap<EntertainmentEntity, EntertainmentLookupDto>()
@@ -55,6 +56,8 @@ public class EntertainmentLookupDto : IMapWith<EntertainmentEntity>
             .ForMember(entertainmentVm => entertainmentVm.Ranking,
                 opt => opt.MapFrom(entertainment => entertainment.Ranking))
             .ForMember(entertainmentVm => entertainmentVm.UrlSite,
-                opt => opt.MapFrom(entertainment => entertainment.UrlSite));
+                opt => opt.MapFrom(entertainment => entertainment.UrlSite))
+            .ForMember(entertainmentVm => entertainmentVm.Address,
+                opt => opt.MapFrom(entertainment => entertainment.Address));
     }
 }
