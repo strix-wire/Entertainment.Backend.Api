@@ -21,4 +21,6 @@
     <ProjectReference Include="..\Entertainment.Persistence\Entertainment.Persistence.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>
